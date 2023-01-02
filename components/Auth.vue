@@ -32,7 +32,7 @@ const handleLogin = async () => {
   try {
     loading.value = true;
     const { data: response, error } = await supabase.auth.signInWithOtp({ email: email.value });
-    if (!!response) {
+    if (response) {
       const accessToken = useCookie("sb-access-token");
       const refreshToken = useCookie("sb-refresh-token");
       accessToken.value = response.session?.access_token ?? null;
