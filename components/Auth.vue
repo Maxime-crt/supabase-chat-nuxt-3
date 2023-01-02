@@ -29,18 +29,18 @@ const supabase = useSupabaseClient();
 const loading = ref(false);
 const email = ref("");
 const handleLogin = async () => {
-  if(!!response){
-      const accessToken = useCookie('sb-access-token')
-      const refreshToken = useCookie('sb-refresh-token')
-      accessToken.value = response.session?.access_token ?? null
-      refreshToken.value = response.session?.refresh_token ?? null
-  }
-  if(!!error){
-      errorMsg.value = error.message
-  }
   try {
     loading.value = true;
-    const { error } = await supabase.auth.signInWithOtp({ email: email.value });
+    const { data: response, error } = await supabase.auth.signInWithOtp({ email: email.value });
+    if (!!response) {
+      const accessToken = useCookie("sb-access-token");
+      const refreshToken = useCookie("sb-refresh-token");
+      accessToken.value = response.session?.access_token ?? null;
+      refreshToken.value = response.session?.refresh_token ?? null;
+    }
+    /* if (!!error) {
+      errorMsg.value = error.message;
+    } */
     if (error) throw error;
     alert("Check your email for the login link!");
   } catch (error) {

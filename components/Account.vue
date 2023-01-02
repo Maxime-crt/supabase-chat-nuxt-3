@@ -33,6 +33,7 @@
 
 <script setup>
 const supabase = useSupabaseClient();
+const client = useSupabaseAuthClient()
 
 const loading = ref(true);
 const username = ref("");
@@ -78,7 +79,7 @@ async function updateProfile() {
 async function signOut() {
   try {
     loading.value = true;
-    let { error } = await supabase.auth.signOut();
+    let { error } = await client.auth.signOut()
     if (error) throw error;
   } catch (error) {
     alert(error.message);
