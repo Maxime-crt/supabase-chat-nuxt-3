@@ -1,5 +1,5 @@
 fs = require('fs')
-locationOfNitroPreset = './node_modules/nitropack/dist/runtime/entries/netlify.mjs'
+locationOfNitroPreset = './node_modules/nitropack/dist/runtime/entries/amplify.mjs'
 try {
     fs.readFile(locationOfNitroPreset, 'utf8', function (err,data) {
         if(data.includes('normalizeOutgoingHeaders(r.headers)')){
