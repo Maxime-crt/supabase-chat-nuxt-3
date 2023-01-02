@@ -29,16 +29,16 @@ const supabase = useSupabaseClient();
 const loading = ref(false);
 const email = ref("");
 const handleLogin = async () => {
-
+    
   try {
     loading.value = true;
     const { data: response, error } = await supabase.auth.signInWithOtp({ email: email.value });
     if (response) {
     
-      /* const accessToken = useCookie("sb-access-token");
+      const accessToken = useCookie("sb-access-token");
       const refreshToken = useCookie("sb-refresh-token");
       accessToken.value = response.session?.access_token ?? null;
-      refreshToken.value = response.session?.refresh_token ?? null; */
+      refreshToken.value = response.session?.refresh_token ?? null;
       if (response.session?.access_token) {
         accessToken.value = response.session.access_token;
       }
