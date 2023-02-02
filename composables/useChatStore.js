@@ -19,8 +19,8 @@ export const useChatStore = defineStore('chatStore', {
             let supabase = useSupabaseClient()
             supabase
                 .channel('*')
-                .on('postgres_changes', { event: '*', schema: '*' }, payload => {
-                    handler(payload.new);
+                .on('postgres_changes', { event: 'insert', schema: 'public', table: 'messages' }, payload => {
+                    handler(payload.data.new);
                 })
                 .subscribe()
         },

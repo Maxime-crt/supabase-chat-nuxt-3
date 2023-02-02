@@ -46,7 +46,7 @@ onMounted(async () => {
 });
 
 onMounted(async () => {
-  await supabase
+  await supabase.value
       .from('profiles')
       .select('username') // , avatar_url
       .eq('id', props.username)
