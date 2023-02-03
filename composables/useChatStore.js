@@ -19,8 +19,8 @@ export const useChatStore = defineStore('chatStore', {
             let supabase = useSupabaseClient()
             supabase
                 .channel('*')
-                .on('postgres_changes', { event: 'insert', schema: 'public', table: 'messages' }, payload => {
-                    handler(payload.data.new);
+                .on('postgres_changes', { event: '*', schema: '*' }, payload => {
+                    handler(payload.new);
                 })
                 .subscribe()
         },
@@ -29,8 +29,7 @@ export const useChatStore = defineStore('chatStore', {
             const { data } = await supabase
                 .from("messages")
                 .insert({ user_id, text });
-                
             return data;
         }
     },
-}) 
+})
