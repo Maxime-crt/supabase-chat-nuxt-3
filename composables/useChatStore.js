@@ -29,8 +29,7 @@ export const useChatStore = defineStore('chatStore', {
             const { data } = await supabase
                 .from("messages")
                 .insert({ user_id, text });
-                
             return data;
         }
     },
-}) 
+})

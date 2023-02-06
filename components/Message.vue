@@ -21,7 +21,7 @@
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
     </div>
     <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">
-     <!-- <ProfileImage v-model:path="avatar" /> -->
+      <!-- <ProfileImage v-model:path="avatar" /> -->
     </div>
   </div>
 </template>
@@ -38,23 +38,20 @@ const props = defineProps({
 })
 
 const user = ref(null);
-/* const avatar = ref(null); */
+const avatar = ref(null);
 
-const supabase = ref(null);
-onMounted(async () => {
-  supabase.value = useSupabaseClient();
-});
+const supabase = useSupabaseClient()
 
 onMounted(async () => {
   await supabase
-      .from('profiles')
-      .select('username') // , avatar_url
-      .eq('id', props.username)
-      .single()
-      .then(({data, error}) => {
-        user.value = data.username ? data.username : props.username;
-        /* avatar.value = data.avatar_url ? data.avatar_url : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`; */
-      })
+    .from('profiles')
+    .select('username, avatar_url')
+    .eq('id', props.username)
+    .single()
+    .then(({ data, error }) => {
+      user.value = data.username ? data.username : props.username;
+      avatar.value = data.avatar_url ? data.avatar_url : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`;
+    })
 })
 
 const messageHour = computed(() => {
@@ -64,6 +61,4 @@ const messageHour = computed(() => {
     minute: '2-digit',
   });
 })
-
 </script>
-
