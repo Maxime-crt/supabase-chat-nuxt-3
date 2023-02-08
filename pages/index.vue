@@ -33,4 +33,14 @@
 const user = useUser();
 user.value = useSupabaseUser();
 console.log(user.value);
+
+useHead({
+  title: 'Supabase Chat',
+  meta: [
+    {
+      name: 'google-site-verification',
+      content: '1MolawBMrGYEVTKzy2yIsW9UQAKG9yTyJ8a0-XdzP58',
+    },
+  ],
+});
 </script>
