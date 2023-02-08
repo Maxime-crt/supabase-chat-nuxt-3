@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "@nuxtjs/supabase": "^0.3.1",
-    "nuxt": "^3.1.2"
+    "nuxt": "^3.1.2",
+    "sitemap": "^7.1.1"
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.3.0",
