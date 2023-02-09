@@ -1,12 +1,17 @@
 <template>
   <!-- Other -->
   <div v-if="!personal" class="flex w-full mt-2 space-x-3 max-w-xs">
-    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">
-      <!-- <ProfileImage v-model:path="avatar" /> -->
+    <!-- Profile Picture -->
+    <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+      <ProfileImage v-model:path="avatar" />
     </div>
+    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
+    <!-- Message -->
     <div>
       <span class="font-bold text-sm">{{ user }}</span>
-      <div class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-full">
+      <div
+        class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-full"
+      >
         <p class="text-sm">{{ text }}</p>
       </div>
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
@@ -15,49 +20,52 @@
   <!-- Current -->
   <div v-else class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
     <div>
-      <div class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-full">
+      <div
+        class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-full"
+      >
         <p class="text-sm">{{ text }}</p>
       </div>
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
     </div>
-    <div class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300">
-      <!-- <ProfileImage v-model:path="avatar" /> -->
+    <!-- Profile Picture -->
+    <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+      <ProfileImage v-model:path="avatar" />
     </div>
+    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
   </div>
 </template>
 
-
-
 <script setup>
-
 const props = defineProps({
   personal: Boolean,
   username: String,
   text: String,
-  timestamp: String
-})
+  timestamp: String,
+});
 
 const user = ref(null);
 const avatar = ref(null);
 
-const supabase = useSupabaseClient()
+const supabase = useSupabaseClient();
 
 onMounted(async () => {
   await supabase
-    .from('profiles')
-    .select('username, avatar_url')
-    .eq('id', props.username)
+    .from("profiles")
+    .select("username, avatar_url")
+    .eq("id", props.username)
     .single()
     .then(({ data, error }) => {
       user.value = data.username ? data.username : props.username;
-      avatar.value = data.avatar_url ? data.avatar_url : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`;
-    })
-})
+      avatar.value = data.avatar_url
+        ? data.avatar_url
+        : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`;
+    });
+});
 
 const messageHour = computed(() => {
   return new Date(props.timestamp).toLocaleTimeString([], {
-    hour: '2-digit',
-    minute: '2-digit',
+    hour: "2-digit",
+    minute: "2-digit",
   });
-})
+});
 </script>
