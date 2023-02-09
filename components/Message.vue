@@ -55,8 +55,7 @@ onMounted(async () => {
 })
 
 const messageHour = computed(() => {
-  return new Date(props.timestamp).toLocaleTimeString('tr-TR', {
-    timeZone: 'Europe/Istanbul',
+  return new Date(props.timestamp).toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
   });
