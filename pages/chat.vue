@@ -7,7 +7,7 @@
         class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
       >
         <div
-          class="flex flex-col flex-grow h-0 p-4 overflow-scroll overscroll-behavior-y-contain position-fixed"
+          class="flex flex-col flex-grow h-0 p-4 overflow-y-auto position-fixed"
           ref="scrollContainer"
         >
           <Message
@@ -27,6 +27,7 @@
             v-model="input"
             @keydown="handleSend"
           />
+          <ion-icon name="attach-outline" ></ion-icon>
         </div>
       </div>
     </div>
@@ -87,4 +88,6 @@ onMounted(() => {
     scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
   });
 });
+
+
 </script>
