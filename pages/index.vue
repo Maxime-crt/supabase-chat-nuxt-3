@@ -32,7 +32,7 @@
 <script setup>
 const user = useUser();
 user.value = useSupabaseUser();
-console.log(user.value);
+/* console.log(user.value); */
 
 useHead({
   title: 'Supabase Chat',
