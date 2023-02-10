@@ -1,15 +1,22 @@
 <template>
   <div class="relative">
     <div
-      class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 pt-14 md:pt-16"
+    class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 pt-14 md:pt-16"
     >
-      <div
-        class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
-      >
+    <div
+    class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
+    >
+    <Private 
+      v-for="user in userList"
+      :username="user.id"
+      :personal_id="userID"
+    />
+    <!-- put the chat in Private -->
         <div
           class="flex flex-col flex-grow h-0 p-4 overflow-y-auto position-fixed"
           ref="scrollContainer"
         >
+        <!-- add receiver_id in props -->
           <Message
             v-for="message in messages.slice().reverse()"
             :username="message.user_id"
@@ -57,6 +64,7 @@ const getUsers = async () => {
 await getUsers()
 console.log(userList.value)
 
+// a deplacer dans le composant Private <---- Start --->
 const loadMessagesBatch = async () => {
   const loadedMessages = await chat.getMessages(
     messagesCount.value,
@@ -77,19 +85,15 @@ await chat.onNewMessage((newMessage) => {
   });
 });
 
-function closeModal() {
-  message.value = null;
-  show.value = false;
-}
-
 const handleSend = async (event) => {
   if (!event.key || event.key === "Enter") {
     if (input.value) {
-      await chat.createNewMessage(userID.value, input.value);
+      await chat.createNewMessage(userID.value, input.value); // add receiver_id
       input.value = "";
     }
   }
 };
+// fin du deplacement <---- END --->
 
 onMounted(() => {
   nextTick(() => {

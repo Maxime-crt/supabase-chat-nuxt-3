@@ -6,11 +6,11 @@ export const useChatStore = defineStore('chatStore', {
         messageList: (state) => state.messages,
     },
     actions: {
-        async getMessages(from, to) {
+        async getMessages(from, to) { // add receiver_id
             let supabase = useSupabaseClient()
             const { data } = await supabase
                 .from("messages")
-                .select()
+                .select() // <HERE> add receiver_id carefull with the syntax
                 .range(from, to)
                 .order("timestamp", { ascending: false });
             return data;
@@ -38,5 +38,6 @@ export const useChatStore = defineStore('chatStore', {
                 .select();
             return data;
         },
+        // add async getMessagesById
     },
 })
