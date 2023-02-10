@@ -30,6 +30,13 @@ export const useChatStore = defineStore('chatStore', {
                 .from("messages")
                 .insert({ user_id, text });
             return data;
-        }
+        },
+        async getUserList() {
+            let supabase = useSupabaseClient()
+            const { data } = await supabase
+                .from("profiles")
+                .select();
+            return data;
+        },
     },
 })

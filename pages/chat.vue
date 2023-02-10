@@ -43,11 +43,19 @@ const message = ref(null);
 const userID = ref(null);
 const show = ref(false);
 
+const userList = ref([]);
 const messages = ref([]);
 const messagesCount = ref(0);
 const maxMessagesPerRequest = 50;
 
 const scrollContainer = ref(null);
+
+const getUsers = async () => {
+  userList.value = await chat.getUserList()
+};
+
+await getUsers()
+console.log(userList.value)
 
 const loadMessagesBatch = async () => {
   const loadedMessages = await chat.getMessages(
