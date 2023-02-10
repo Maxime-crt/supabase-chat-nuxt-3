@@ -9,7 +9,7 @@ const avatar_path = ref('')
 loading.value = true
 const user = useSupabaseUser()
 
-console.log(user.value)
+/* console.log(user.value) */
 
 let { data } = await supabase
   .from('profiles')
