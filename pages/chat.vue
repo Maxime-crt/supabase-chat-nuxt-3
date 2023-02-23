@@ -8,22 +8,15 @@
       >
         <Private
           v-for="user in userList"
+          :key="user.id"
           :username="user.id"
           :personal_id="userID"
+          @keydown="handleClick"
         />
         <div
           class="flex flex-col flex-grow h-0 p-4 overflow-y-auto position-fixed"
           ref="scrollContainer"
-        >
-          <Message
-            v-for="message in messages.slice().reverse()"
-            :username="message.user_id"
-            :receiver_id="message.receiver_id"
-            :personal="message.user_id === userID"
-            :timestamp="message.timestamp"
-            :text="message.text"
-          />
-        </div>
+        ></div>
 
         <div class="bg-gray-300 p-4">
           <input
@@ -41,16 +34,10 @@
 
 <script setup>
 const user = useUser();
-
 const chat = useChatStore();
 const input = ref("");
 const userID = ref(null);
-
 const userList = ref([]);
-const messages = ref([]);
-
-
-
 const receiver_id = useReceiver_id();
 
 const getUsers = async () => {
@@ -58,21 +45,16 @@ const getUsers = async () => {
 };
 
 await getUsers();
-console.log(userList.value);
-
-
 
 userID.value = user.value.id;
 
 const handleSend = async (event) => {
-  console.log("Receiver id : " + receiver_id.value);
-
   if (!event.key || event.key === "Enter") {
     if (input.value) {
       await chat.createNewMessage(userID.value, input.value, receiver_id.value);
       input.value = "";
+      console.log("Receiver id : " + receiver_id.value);
     }
-
   }
 };
 </script>
