@@ -1,25 +1,24 @@
 <template>
   <div class="relative">
     <div
-    class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 pt-14 md:pt-16"
+      class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 pt-14 md:pt-16"
     >
-    <div
-    class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
-    >
-    <Private 
-      v-for="user in userList"
-      :username="user.id"
-      :personal_id="userID"
-    />
-    <!-- put the chat in Private -->
+      <div
+        class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
+      >
+        <Private
+          v-for="user in userList"
+          :username="user.id"
+          :personal_id="userID"
+        />
         <div
           class="flex flex-col flex-grow h-0 p-4 overflow-y-auto position-fixed"
           ref="scrollContainer"
         >
-        <!-- add receiver_id in props -->
           <Message
             v-for="message in messages.slice().reverse()"
             :username="message.user_id"
+            :receiver_id="message.receiver_id"
             :personal="message.user_id === userID"
             :timestamp="message.timestamp"
             :text="message.text"
@@ -34,7 +33,6 @@
             v-model="input"
             @keydown="handleSend"
           />
-          <ion-icon name="attach-outline" ></ion-icon>
         </div>
       </div>
     </div>
@@ -46,60 +44,35 @@ const user = useUser();
 
 const chat = useChatStore();
 const input = ref("");
-const message = ref(null);
 const userID = ref(null);
-const show = ref(false);
 
 const userList = ref([]);
 const messages = ref([]);
-const messagesCount = ref(0);
-const maxMessagesPerRequest = 50;
 
-const scrollContainer = ref(null);
+
+
+const receiver_id = useReceiver_id();
 
 const getUsers = async () => {
-  userList.value = await chat.getUserList()
+  userList.value = await chat.getUserList();
 };
 
-await getUsers()
-console.log(userList.value)
+await getUsers();
+console.log(userList.value);
 
-// a deplacer dans le composant Private <---- Start --->
-const loadMessagesBatch = async () => {
-  const loadedMessages = await chat.getMessages(
-    messagesCount.value,
-    maxMessagesPerRequest - 1
-  );
 
-  messages.value = [...loadedMessages, ...messages.value];
-  messagesCount.value += loadedMessages.length;
-};
 
 userID.value = user.value.id;
-await loadMessagesBatch();
-await chat.onNewMessage((newMessage) => {
-  messages.value = [newMessage, ...messages.value];
-  messagesCount.value += 1;
-  nextTick(() => {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-  });
-});
 
 const handleSend = async (event) => {
+  console.log("Receiver id : " + receiver_id.value);
+
   if (!event.key || event.key === "Enter") {
     if (input.value) {
-      await chat.createNewMessage(userID.value, input.value); // add receiver_id
+      await chat.createNewMessage(userID.value, input.value, receiver_id.value);
       input.value = "";
     }
+
   }
 };
-// fin du deplacement <---- END --->
-
-onMounted(() => {
-  nextTick(() => {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-  });
-});
-
-
 </script>
