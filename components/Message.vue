@@ -2,10 +2,9 @@
   <!-- Other -->
   <div v-if="!personal" class="flex w-full mt-2 space-x-3 max-w-xs">
     <!-- Profile Picture -->
-    <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+    <div class="flex-shrink-0 h-10 w-10 rounded-full">
       <ProfileImage v-model:path="avatar" />
     </div>
-    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
     <!-- Message -->
     <div>
       <span class="font-bold text-sm">{{ user }}</span>
@@ -28,10 +27,9 @@
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
     </div>
     <!-- Profile Picture -->
-    <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+    <div class="flex-shrink-0 h-10 w-10 rounded-full">
       <ProfileImage v-model:path="avatar" />
     </div>
-    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
   </div>
 </template>
 
@@ -58,7 +56,7 @@ onMounted(async () => {
       user.value = data.username ? data.username : props.username;
       avatar.value = data.avatar_url
         ? data.avatar_url
-        : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`;
+        : "";
     });
 });
 
