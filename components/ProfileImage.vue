@@ -25,6 +25,7 @@ watch(path, () => {
         class=""
         style="margin-top: 2px; border-radius: 100px;"
     />
-    <!-- <div v-else class="avatar no-image" :style="{ height: size + 'em', width: size + 'em' }" /> -->
+    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-300" />
+
   </div>
 </template>
