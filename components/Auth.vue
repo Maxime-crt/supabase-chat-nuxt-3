@@ -32,13 +32,15 @@ const email = ref("");
 const handleLogin = async (event) => {
   try {
     loading.value = true;
+    
+    const lastVisitedPage = window.location.href;
 
-    const { data: response, error } = await supabase.auth.signInWithOtp(
-      {
-        email: email.value,
+    const { data: response, error } = await supabase.auth.signInWithOtp({
+      email: email.value,
+      options: {
+        emailRedirectTo: lastVisitedPage,
       },
-      { redirectTo: "http://localhost:3000/test-connexion" }
-    );
+    });
 
     if (response) {
       const accessToken = useCookie("sb-access-token");
