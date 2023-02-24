@@ -109,11 +109,13 @@ watch(receiver_id, async (newReceiver_id) => {
     await loadMessagesBatch();
     // update les messages quand un nouveau message arrive et scroll automatiquement
     await chat.onNewMessage((newMessage) => {
-      messages.value = [newMessage, ...messages.value];
-      messagesCount.value += 1;
-      nextTick(() => {
-        scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-      });
+      if (newMessage.receiver_id === newReceiver_id && newMessage.user_id === userID.value) {
+        messages.value = [newMessage, ...messages.value];
+        messagesCount.value += 1;
+        nextTick(() => {
+          scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        });
+      }
     });
   }
 });
