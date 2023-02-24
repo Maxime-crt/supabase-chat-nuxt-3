@@ -47,20 +47,4 @@ onMounted(async () => {
     console.log(error);
   }
 });
-
-// Récupérer le username de l'utilisateur connecté
-onMounted(async () => {
-  try {
-    await supabase
-      .from("profiles")
-      .select("username")
-      .single()
-      
-      .then(({ data, error }) => {
-        user.value = data.username ? data.username : props.username;
-      });
-  } catch (error) {
-    console.log(error);
-  }
-});
 </script>

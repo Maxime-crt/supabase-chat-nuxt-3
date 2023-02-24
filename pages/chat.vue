@@ -47,6 +47,7 @@
     </div>
   </div>
 </template>
+
 <script setup>
 const user = useUser();
 const chat = useChatStore();
@@ -57,6 +58,7 @@ const receiver_id = useReceiver_id();
 const messages = ref([]);
 const messagesCount = ref(0);
 const maxMessagesPerRequest = 50;
+const scrollContainer = ref(null);
 
 const getUsers = async () => {
   userList.value = await chat.getUserList();
@@ -109,13 +111,11 @@ watch(receiver_id, async (newReceiver_id) => {
     await loadMessagesBatch();
     // update les messages quand un nouveau message arrive et scroll automatiquement
     await chat.onNewMessage((newMessage) => {
-      if (newMessage.receiver_id === newReceiver_id && newMessage.user_id === userID.value) {
         messages.value = [newMessage, ...messages.value];
         messagesCount.value += 1;
         nextTick(() => {
           scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
         });
-      }
     });
   }
 });
