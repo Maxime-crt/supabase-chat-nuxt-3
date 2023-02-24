@@ -1,21 +1,13 @@
 <template>
-  <button class="bg-gray-300" @click="handleClick()">
-    <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
-      <ProfileImage v-model:path="avatar" />
-    </div>
-    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
-    <span class="font-bold text-sm"> {{ props.username }} </span>
-  </button>
-
-  <Message
-    v-for="message in messages.slice().reverse()"
-    :key="message.id"
-    :username="message.user_id"
-    :receiver_id="message.receiver_id"
-    :personal="message.user_id === userID"
-    :timestamp="message.timestamp"
-    :text="message.text"
-  />
+  <div>
+    <button class="bg-gray-300" @click="handleClick()">
+      <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+        <ProfileImage v-model:path="avatar" />
+      </div>
+      <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
+      <span class="font-bold text-sm"> {{ user }} </span>
+    </button>
+  </div>
 </template>
 
 <script setup>
@@ -27,53 +19,17 @@ const props = defineProps({
 const user = ref(null);
 const avatar = ref(null);
 const supabase = useSupabaseClient();
-const chat = useChatStore();
-const userID = ref(null);
-const messages = ref([]);
-const messagesCount = ref(0);
-const maxMessagesPerRequest = 50;
-const scrollContainer = ref(null);
 const receiver_id = useReceiver_id();
 
+// Le receiver_id est celui de l'utilisateur avec qui on veut discuter
 async function handleClick() {
-  console.log(user.value);
-  console.log("My id : " + props.personal_id);
   receiver_id.value = props.username;
-  console.log("Receiver id : " + receiver_id.value);
-
-  if (receiver_id.value) {
-    messages.value = await chat.getMessagesById(
-      userID.value,
-      receiver_id.value,
-      messagesCount.value,
-      maxMessagesPerRequest
-    );
-    messagesCount.value += messages.value.length;
-    const loadMessagesBatch = async () => {
-      const loadedMessages = await chat.getMessagesById(
-        userID.value,
-        receiver_id.value,
-        messagesCount.value,
-        maxMessagesPerRequest
-      );
-
-      messagesCount.value, maxMessagesPerRequest - 1;
-
-      messages.value = [...loadedMessages, ...messages.value];
-      messagesCount.value += loadedMessages.length;
-    };
-
-    await loadMessagesBatch();
-    await chat.onNewMessage((newMessage) => {
-      messages.value = [newMessage, ...messages.value];
-      messagesCount.value += 1;
-      nextTick(() => {
-        scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-      });
-    });
-  }
+  /* console.log(user.value);
+  console.log("My id : " + props.personal_id);
+  console.log("Receiver id : " + receiver_id.value); */
 }
 
+// Récupérer le username de chaque utilisateurs
 onMounted(async () => {
   try {
     await supabase
@@ -92,9 +48,19 @@ onMounted(async () => {
   }
 });
 
-onMounted(() => {
-  nextTick(() => {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-  });
+// Récupérer le username de l'utilisateur connecté
+onMounted(async () => {
+  try {
+    await supabase
+      .from("profiles")
+      .select("username")
+      .single()
+      
+      .then(({ data, error }) => {
+        user.value = data.username ? data.username : props.username;
+      });
+  } catch (error) {
+    console.log(error);
+  }
 });
 </script>

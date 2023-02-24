@@ -45,9 +45,9 @@ const props = defineProps({
 
 const user = ref(null);
 const avatar = ref(null);
-
 const supabase = useSupabaseClient();
 
+// Récupérer le username de chaque utilisateurs
 onMounted(async () => {
   await supabase
     .from("profiles")
@@ -62,6 +62,7 @@ onMounted(async () => {
     });
 });
 
+// le format de l'heure
 const messageHour = computed(() => {
   return new Date(props.timestamp).toLocaleTimeString([], {
     hour: "2-digit",

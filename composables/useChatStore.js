@@ -16,12 +16,13 @@ export const useChatStore = defineStore('chatStore', {
             return data;
         },
         // add async getMessagesById
-        async getMessagesById(id) { 
+        async getMessagesById(id, from, to) { // from and to are optional
             let supabase = useSupabaseClient()
             const { data } = await supabase
                 .from("messages")
                 .select()
                 .eq('receiver_id', id)
+                .range(from, to)
                 .order("timestamp", { ascending: false });
             return data;
         },
