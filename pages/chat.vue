@@ -113,13 +113,11 @@ watch(receiver_id, async (newReceiver_id) => {
 
     // console.log(messages.value);
     await chat.onNewMessage((newMessage) => {
-        if (newMessage.receiver_id === newReceiver_id) {
           messages.value = [newMessage, ...messages.value];
           messagesCount.value += 1;
           nextTick(() => {
             scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
           });
-        }
       });
   }
 });

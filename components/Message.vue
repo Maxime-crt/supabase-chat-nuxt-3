@@ -8,9 +8,7 @@
     <!-- Message -->
     <div>
       <span class="font-bold text-sm">{{ user }}</span>
-      <div
-        class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-full"
-      >
+      <div class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-full">
         <p class="text-sm">{{ text }}</p>
       </div>
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
@@ -19,9 +17,7 @@
   <!-- Current -->
   <div v-else class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
     <div>
-      <div
-        class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-full"
-      >
+      <div class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-full">
         <p class="text-sm">{{ text }}</p>
       </div>
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
@@ -35,10 +31,11 @@
 
 <script setup>
 const props = defineProps({
-  personal: Boolean,
   username: String,
-  text: String,
+  receiver_id: String,
+  personal: Boolean,
   timestamp: String,
+  text: String
 });
 
 const user = ref(null);
