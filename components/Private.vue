@@ -1,10 +1,9 @@
 <template>
   <div>
     <button class="bg-gray-300" @click="handleClick()">
-      <div v-if="!avatar_url" class="flex-shrink-0 h-10 w-10 rounded-full">
+      <div class="flex-shrink-0 h-10 w-10 rounded-full">
         <ProfileImage v-model:path="avatar" />
       </div>
-      <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" />
       <span class="font-bold text-sm"> {{ user }} </span>
     </button>
   </div>
@@ -39,9 +38,7 @@ onMounted(async () => {
       .single()
       .then(({ data, error }) => {
         user.value = data.username ? data.username : props.username;
-        avatar.value = data.avatar_url
-          ? data.avatar_url
-          : `https://avatars.dicebear.com/api/bottts/${props.username}.svg`;
+        avatar.value = data.avatar_url ? data.avatar_url : "";
       });
   } catch (error) {
     console.log(error);

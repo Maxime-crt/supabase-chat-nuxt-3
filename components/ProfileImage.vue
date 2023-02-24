@@ -1,9 +1,10 @@
 <script setup>
 let supabase = useSupabaseClient()
-const prop = defineProps(['path', 'size'])
-const { path, size } = toRefs(prop)
+const prop = defineProps(['path'])
+const { path } = toRefs(prop)
 const src = ref('')
 const downloadImage = async () => {
+    if (!path.value) return
     const { data, error } = await supabase.storage.from('avatars').download(path.value)
     if (error) {
         console.log('Error downloading image: ', error.message)
@@ -25,7 +26,7 @@ watch(path, () => {
         class=""
         style="margin-top: 2px; border-radius: 100px;"
     />
-    <div v-else class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-300" />
+    <img v-else src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="h-full w-full object-cover rounded-full" alt="Default avatar">
 
   </div>
 </template>

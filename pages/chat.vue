@@ -83,7 +83,7 @@ const handleSend = async (event) => {
     if (input.value) {
       await chat.createNewMessage(userID.value, input.value, receiver_id.value);
       input.value = "";
-      console.log("Receiver id : " + receiver_id.value);
+      // console.log("Receiver id : " + receiver_id.value);
     }
   }
 };
@@ -110,13 +110,17 @@ watch(receiver_id, async (newReceiver_id) => {
     // appel de la function qui charge les messages
     await loadMessagesBatch();
     // update les messages quand un nouveau message arrive et scroll automatiquement
+
+    // console.log(messages.value);
     await chat.onNewMessage((newMessage) => {
-        messages.value = [newMessage, ...messages.value];
-        messagesCount.value += 1;
-        nextTick(() => {
-          scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-        });
-    });
+        if (newMessage.receiver_id === newReceiver_id && newMessage.user_id === userID.value) {
+          messages.value = [newMessage, ...messages.value];
+          messagesCount.value += 1;
+          nextTick(() => {
+            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+          });
+        }
+      });
   }
 });
 

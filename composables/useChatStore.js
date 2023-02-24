@@ -50,6 +50,5 @@ export const useChatStore = defineStore('chatStore', {
                 .select();
             return data;
         },
-        
     },
 })

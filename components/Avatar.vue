@@ -24,8 +24,9 @@
       </div>
     </div>
   </template>
-  
+
   <script setup>
+    const size = '10em'
     const props = defineProps(['path'])
     const { path } = toRefs(props)
   
