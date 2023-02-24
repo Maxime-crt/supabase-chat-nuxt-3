@@ -98,6 +98,7 @@ watch(receiver_id, async (newReceiver_id) => {
       // Charge les messages
       const loadedMessages = await chat.getMessagesById(
         newReceiver_id,
+        userID.value,
         messagesCount.value,
         maxMessagesPerRequest - 1
       );
