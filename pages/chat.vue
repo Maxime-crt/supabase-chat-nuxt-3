@@ -98,6 +98,10 @@ watch(receiver_id, async (newReceiver_id) => {
     //function qui Charge les messages
     const loadMessagesBatch = async () => {
       // Charge les messages
+      console.log("Receiver id : " + newReceiver_id);
+      console.log("User id : " + userID.value);
+      console.log("Messages count : " + messagesCount.value);
+      console.log("Max messages per request : " + maxMessagesPerRequest);
       const loadedMessages = await chat.getMessagesById(
         newReceiver_id,
         userID.value,
@@ -111,7 +115,7 @@ watch(receiver_id, async (newReceiver_id) => {
     await loadMessagesBatch();
     // update les messages quand un nouveau message arrive et scroll automatiquement
 
-    // console.log(messages.value);
+    console.log(messages.value);
     await chat.onNewMessage((newMessage) => {
           messages.value = [newMessage, ...messages.value];
           messagesCount.value += 1;

@@ -25,7 +25,15 @@ export const useChatStore = defineStore('chatStore', {
                 .eq('user_id', userID)
                 .range(from, to)
                 .order("timestamp", { ascending: false });
-            return data;
+            const { data: data2 } = await supabase
+                .from("messages")
+                .select()
+                .eq('receiver_id', userID)
+                .eq('user_id', id)
+                .range(from, to)
+                .order("timestamp", { ascending: false });
+            const data3 = data.concat(data2)
+            return data3;
         },
         async onNewMessage(handler) {
             let supabase = useSupabaseClient()
