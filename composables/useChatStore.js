@@ -15,25 +15,25 @@ export const useChatStore = defineStore('chatStore', {
                 .order("timestamp", { ascending: false });
             return data;
         },
-        // add async getMessagesById
         async getMessagesById(id, userID, from, to) { // from and to are optional
-            let supabase = useSupabaseClient()
+            let supabase = useSupabaseClient();
             const { data } = await supabase
-                .from("messages")
-                .select()
-                .eq('receiver_id', id)
-                .eq('user_id', userID)
-                .range(from, to)
-                .order("timestamp", { ascending: false });
+              .from("messages")
+              .select()
+              .eq("receiver_id", id)
+              .eq("user_id", userID)
+              .range(from, to)
+              .order("timestamp", { ascending: false });
             const { data: data2 } = await supabase
-                .from("messages")
-                .select()
-                .eq('receiver_id', userID)
-                .eq('user_id', id)
-                .range(from, to)
-                .order("timestamp", { ascending: false });
-            const data3 = data.concat(data2)
-            return data3;
+              .from("messages")
+              .select()
+              .eq("receiver_id", userID)
+              .eq("user_id", id)
+              .range(from, to)
+              .order("timestamp", { ascending: false });
+            const allMessages = data.concat(data2);
+            allMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            return allMessages;
         },
         async onNewMessage(handler) {
             let supabase = useSupabaseClient()
