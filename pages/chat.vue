@@ -24,7 +24,7 @@
             ref="scrollContainer"
           >
             <Message
-              v-for="message in messages.slice().reverse()"
+              v-for="message in messages.slice()"
               :key="message.id"
               :username="message.user_id"
               :receiver_id="message.receiver_id"
@@ -100,8 +100,6 @@ watch(receiver_id, async (newReceiver_id) => {
       // Charge les messages
       console.log("Receiver id : " + newReceiver_id);
       console.log("User id : " + userID.value);
-      console.log("Messages count : " + messagesCount.value);
-      console.log("Max messages per request : " + maxMessagesPerRequest);
       const loadedMessages = await chat.getMessagesById(
         newReceiver_id,
         userID.value,
@@ -113,10 +111,10 @@ watch(receiver_id, async (newReceiver_id) => {
     };
     // appel de la function qui charge les messages
     await loadMessagesBatch();
-    // update les messages quand un nouveau message arrive et scroll automatiquement
 
     console.log(messages.value);
-    await chat.onNewMessage((newMessage) => {
+    // update les messages quand un nouveau message arrive et scroll automatiquement
+    await chat.onNewMessage(newReceiver_id, userID.value, (newMessage) => {
           messages.value = [newMessage, ...messages.value];
           messagesCount.value += 1;
           nextTick(() => {
