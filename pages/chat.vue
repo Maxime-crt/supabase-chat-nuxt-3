@@ -24,13 +24,14 @@
             ref="scrollContainer"
           >
             <Message
-              v-for="message in messages.slice()"
+              v-for="message in messages.slice().reverse()"
               :key="message.id"
               :username="message.user_id"
               :receiver_id="message.receiver_id"
               :personal="message.user_id === userID"
               :timestamp="message.timestamp"
               :text="message.text"
+              @updateMessages="updateMessages()"
             />
           </div>
           <div class="bg-gray-300 p-4">
@@ -108,26 +109,52 @@ watch(receiver_id, async (newReceiver_id) => {
       );
       messages.value = [...messages.value, ...loadedMessages];
       messagesCount.value += loadedMessages.length;
+      watchEffect((messages) => {
+        nextTick(() => {
+          setTimeout(() => {
+            scrollContainer.value.scrollTop =
+              scrollContainer.value.scrollHeight;
+          }, 200);
+        });
+      });
     };
     // appel de la function qui charge les messages
     await loadMessagesBatch();
 
     console.log(messages.value);
+
     // update les messages quand un nouveau message arrive et scroll automatiquement
-    await chat.onNewMessage(newReceiver_id, userID.value, (newMessage) => {
-          messages.value = [newMessage, ...messages.value];
-          messagesCount.value += 1;
-          nextTick(() => {
-            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-          });
+    await chat.onNewMessage((newMessage) => {
+      messages.value = [newMessage, ...messages.value];
+      messagesCount.value += 1;
+      nextTick(() => {
+        setTimeout(() => {
+          scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        }, 200);
       });
+    });
   }
 });
 
 // Scroll automatique quand on reçoit un nouveau message
 onMounted(() => {
   nextTick(() => {
-    scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+    setTimeout(() => {
+      scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+    }, 200);
   });
 });
+
+// Update les messages quand on envoie un nouveau message
+const updateMessages = async () => {
+  await chat.onNewMessage((newMessage) => {
+    messages.value = [newMessage, ...messages.value];
+    messagesCount.value += 1;
+    nextTick(() => {
+      setTimeout(() => {
+        scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+      }, 200);
+    });
+  });
+};
 </script>
