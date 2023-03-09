@@ -24,7 +24,7 @@
             ref="scrollContainer"
           >
             <Message
-              v-for="message in messages.slice().reverse()"
+              v-for="message in messages.slice()"
               :key="message.id"
               :username="message.user_id"
               :receiver_id="message.receiver_id"
@@ -94,6 +94,7 @@ watch(receiver_id, async (newReceiver_id) => {
   if (newReceiver_id) {
     // Reset les messages et le compteur de messages chargés pour la nouvelle conversation
     messages.value = [];
+    
     messagesCount.value = 0;
 
     //function qui Charge les messages
@@ -109,24 +110,23 @@ watch(receiver_id, async (newReceiver_id) => {
       );
       messages.value = [...messages.value, ...loadedMessages];
       messagesCount.value += loadedMessages.length;
-      watchEffect((messages) => {
-        nextTick(() => {
-          setTimeout(() => {
-            scrollContainer.value.scrollTop =
-              scrollContainer.value.scrollHeight;
-          }, 200);
-        });
+
+      nextTick(() => {
+        setTimeout(() => {
+          scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        }, 200);
       });
     };
     // appel de la function qui charge les messages
     await loadMessagesBatch();
 
-    console.log(messages.value);
+    /*  console.log(messages.value); */
 
-    // update les messages quand un nouveau message arrive et scroll automatiquement
-    await chat.onNewMessage((newMessage) => {
-      messages.value = [newMessage, ...messages.value];
+    // Ecoute les nouveaux messages et les ajoute au début du tableau de messages (pour afficher les messages les plus récents en premier)
+    await chat.onNewMessageById(messages , newReceiver_id, userID.value, () => {
+      /* messages.value = [newMessage, ...messages.value]; */
       messagesCount.value += 1;
+      /* console.log(messages.value) */
       nextTick(() => {
         setTimeout(() => {
           scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
@@ -147,7 +147,7 @@ onMounted(() => {
 
 // Update les messages quand on envoie un nouveau message
 const updateMessages = async () => {
-  await chat.onNewMessage((newMessage) => {
+  await chat.onNewMessageById((newMessage) => {
     messages.value = [newMessage, ...messages.value];
     messagesCount.value += 1;
     nextTick(() => {
