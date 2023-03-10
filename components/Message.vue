@@ -28,7 +28,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 const props = defineProps({
   username: String,
@@ -59,9 +58,27 @@ onMounted(async () => {
 
 // le format de l'heure
 const messageHour = computed(() => {
-  return new Date(props.timestamp).toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  const now = new Date();
+  const timestampDate = new Date(props.timestamp);
+  const isToday = now.toDateString() === timestampDate.toDateString();
+  const isYesterday = new Date(now - 86400000).toDateString() === timestampDate.toDateString(); // 86400000 = 24 * 60 * 60 * 1000 (milliseconds in a day)
+
+  if (isToday) {
+    // aujourd'hui
+    return `Aujourd'hui à ${timestampDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
+  } else if (isYesterday) {
+    // hier
+    return `Hier à ${timestampDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
+  } else {
+    // plus de 2 jours
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour12: false
+    };
+    return `${timestampDate.toLocaleDateString([], options)} à ${timestampDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })}`;
+  }
 });
+
 </script>
