@@ -2,28 +2,28 @@
   <!-- Other -->
   <div v-if="!personal" class="flex w-full mt-2 space-x-3 max-w-xs">
     <!-- Profile Picture -->
-    <div class="flex-shrink-0 h-10 w-10 rounded-full">
+    <div class="flex-shrink-0 w-12 h-12	overflow-hidden">
       <ProfileImage v-model:path="avatar" />
     </div>
     <!-- Message -->
     <div>
       <span class="font-bold text-sm">{{ user }}</span>
-      <div class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-full">
-        <p class="text-sm">{{ text }}</p>
+      <div class="bg-blue-600 text-white p-3 rounded-r-lg rounded-bl-lg max-w-sm">
+        <p class="text-sm break-words">{{ text }}</p>
       </div>
       <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
     </div>
   </div>
   <!-- Current -->
-  <div v-else class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">
+  <div v-else class="flex w-full mt-6 space-x-3 max-w-xs ml-auto justify-end">
     <div>
-      <div class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-full">
-        <p class="text-sm">{{ text }}</p>
+      <div class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-sm">
+        <p class="text-sm break-words">{{ text }}</p>
       </div>
-      <span class="text-xs text-gray-500 leading-none">{{ messageHour }}</span>
+      <span class="flex text-xs text-gray-500 leading-none justify-end mt-2">{{ messageHour }}</span>
     </div>
     <!-- Profile Picture -->
-    <div class="flex-shrink-0 h-10 w-10 rounded-full">
+    <div class="flex-shrink-0 w-12 h-12	overflow-hidden">
       <ProfileImage v-model:path="avatar" />
     </div>
   </div>

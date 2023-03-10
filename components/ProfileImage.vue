@@ -23,10 +23,9 @@ watch(path, () => {
         v-if="src"
         :src="src"
         alt="Avatar"
-        class=""
-        style="margin-top: 2px; border-radius: 100px;"
+        class="rounded-full object-cover h-12 w-12" 
     />
-    <img v-else src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="h-full w-full object-cover rounded-full" alt="Default avatar">
+    <img v-else src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y" class="rounded-full object-cover h-12 w-12" alt="Default avatar">
 
   </div>
 </template>
