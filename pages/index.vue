@@ -6,6 +6,17 @@
       <Auth v-else />
     </div>
 
+    <!-- The button to open modal -->
+    <label for="my-modal-4" class="btn">Messagerie</label>
+
+    <!-- Put this part before </body> tag -->
+    <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+    <label for="my-modal-4" class="modal cursor-pointer">
+      <label class="modal-box relative" for="">
+        <Chat />
+      </label>
+    </label>
+
     <div class="container mx-auto bg-gray-300 p-8 my-8">
       <h1 class="font-bold text-black text-4xl text-center">Supabase Chat</h1>
       <router-link to="/chat">
@@ -36,8 +47,6 @@
         </button>
       </router-link>
     </div>
-
-
   </div>
 </template>
 
@@ -47,11 +56,11 @@ user.value = useSupabaseUser();
 /* console.log(user.value); */
 
 useHead({
-  title: 'Supabase Chat',
+  title: "Supabase Chat",
   meta: [
     {
-      name: 'google-site-verification',
-      content: '1MolawBMrGYEVTKzy2yIsW9UQAKG9yTyJ8a0-XdzP58',
+      name: "google-site-verification",
+      content: "1MolawBMrGYEVTKzy2yIsW9UQAKG9yTyJ8a0-XdzP58",
     },
   ],
 });

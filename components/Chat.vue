@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- Menu Left side -->
-    <div class="relative">
-      <div class="absolute inset-y-0 left-0 max-w-3xl z-50">
+    <!-- Menu Top side -->
+    <div class="flex ">
+      <div class="flex gap-3">
         <Private
           v-for="user in filteredUserList"
           :key="user.id"
@@ -12,17 +12,12 @@
       </div>
     </div>
     <!-- Chat -->
-    <div class="relative">
-      <div
-        class="flex flex-col items-center justify-center w-screen min-h-screen bg-gray-100 text-gray-800 pt-14 md:pt-16"
-      >
+    <div class="relative mt-4">
+      <div class="bg-red w-full z-50">
         <div
-          class="flex flex-col flex-grow w-full max-w-xl bg-white overflow-hidden"
+          class="flex flex-col flex-grow w-full h-full bg-white overflow-hidden"
         >
-          <div
-            class="flex flex-col flex-grow h-0 p-4 overflow-y-auto position-fixed"
-            ref="scrollContainer"
-          >
+          <div class="mb-2" ref="scrollContainer">
             <Message
               v-for="message in messages.slice()"
               :key="message.id"
@@ -34,43 +29,14 @@
               @updateMessages="updateMessages()"
             />
           </div>
-          <div class="flex justify-center items-center bg-gray-300 p-4">
+          <div class="flex justify-center items-center bg-gray-300 p-1 rounded">
             <input
-              class="flex items-center h-10 w-full rounded px-3 text-sm"
+              class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
               type="text"
               placeholder="Type your message…"
               v-model="input"
               @keydown="handleSend"
             />
-            <!-- <div>
-              <input
-                type="file"
-                accept="image/png, image/jpeg, image/jpg, image/gif"
-                id="fileInput"
-                hidden
-                @change="onFileChange"
-              />
-              <label class="custom-upload-btn" for="fileInput">
-                <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-miterlimit="10"
-                      stroke-width="32"
-                      d="M216.08 192v143.85a40.08 40.08 0 0 0 80.15 0l.13-188.55a67.94 67.94 0 1 0-135.87 0v189.82a95.51 95.51 0 1 0 191 0V159.74"
-                    />
-                  </svg>
-                </div>
-              </label>
-            </div>
-            <div v-if="selectedFileName">{{ selectedFileName }}</div> -->
           </div>
         </div>
       </div>
@@ -189,10 +155,10 @@ const updateMessages = async () => {
 
 // Upload de fichier
 /* const selectedFileName = ref("");
-
-async function onFileChange(e) {
-  const file = e.target.files[0];
-  selectedFileName.value = file.name;
- 
-} */
+  
+  async function onFileChange(e) {
+    const file = e.target.files[0];
+    selectedFileName.value = file.name;
+   
+  } */
 </script>

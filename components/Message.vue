@@ -15,7 +15,7 @@
     </div>
   </div>
   <!-- Current -->
-  <div v-else class="flex w-full mt-6 space-x-3 max-w-xs ml-auto justify-end">
+  <div v-else class="flex w-full mt-4 space-x-3 max-w-xs ml-auto justify-end">
     <div>
       <div class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg max-w-sm">
         <p class="text-sm break-words">{{ text }}</p>

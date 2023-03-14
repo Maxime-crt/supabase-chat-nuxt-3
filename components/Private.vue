@@ -1,10 +1,10 @@
 <template>
   <div>
-    <button class="bg-gray-300" @click="handleClick()">
-      <div class="flex-shrink-0 h-10 w-10 rounded-full">
+    <button class="bg-gray-300 rounded-full p-2" @click="handleClick()">
+      <div class="flex content-center align-center gap-2">
         <ProfileImage v-model:path="avatar" />
+        <span class="grid font-bold text-sm content-center"> {{ user }} </span>
       </div>
-      <span class="font-bold text-sm"> {{ user }} </span>
     </button>
   </div>
 </template>
