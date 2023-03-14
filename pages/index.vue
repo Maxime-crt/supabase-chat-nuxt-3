@@ -7,15 +7,20 @@
     </div>
 
     <!-- The button to open modal -->
-    <label for="my-modal-4" class="btn">Messagerie</label>
+    <label for="my-modal-3" class="btn">Messagerie</label>
 
     <!-- Put this part before </body> tag -->
-    <input type="checkbox" id="my-modal-4" class="modal-toggle" />
-    <label for="my-modal-4" class="modal cursor-pointer">
-      <label class="modal-box relative" for="">
+    <input type="checkbox" id="my-modal-3" class="modal-toggle" />
+    <div class="modal">
+      <div class="modal-box relative">
+        <label
+          for="my-modal-3"
+          class="btn btn-sm btn-circle absolute right-2 top-2"
+          >✕</label
+        >
         <Chat />
-      </label>
-    </label>
+      </div>
+    </div>
 
     <div class="container mx-auto bg-gray-300 p-8 my-8">
       <h1 class="font-bold text-black text-4xl text-center">Supabase Chat</h1>
