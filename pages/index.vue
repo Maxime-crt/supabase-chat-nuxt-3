@@ -12,13 +12,37 @@
     <!-- Put this part before </body> tag -->
     <input type="checkbox" id="my-modal-3" class="modal-toggle" />
     <div class="modal">
-      <div class="modal-box relative">
+      <div
+        class="modal-box relative scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+      >
         <label
           for="my-modal-3"
           class="btn btn-sm btn-circle absolute right-2 top-2"
           >✕</label
         >
         <Chat />
+      </div>
+    </div>
+
+    <!-- Button Scroll to bottom of the page and appear only when the scrollbar is not on the bottom of the page -->
+    <div
+      class="fixed bottom-4 right-4 bg-gray-100 rounded-full shadow cursor-pointer"
+      @click="scrollToBottom()"
+      v-if="!isHidden"
+    >
+      <div class="bg-white rounded-full p-2 shadow">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6 text-gray-700"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M15.293 8.293a1 1 0 00-1.414-1.414L10 11.586 5.707 7.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0l5-5z"
+            clip-rule="evenodd"
+          />
+        </svg>
       </div>
     </div>
 
@@ -68,5 +92,24 @@ useHead({
       content: "1MolawBMrGYEVTKzy2yIsW9UQAKG9yTyJ8a0-XdzP58",
     },
   ],
+});
+
+
+// Button Scroll to bottom of the page appear when the user is not on the bottom of the page
+const isHidden = ref(false);
+
+function scrollToBottom() {
+  window.scrollTo({
+    top: document.body.scrollHeight,
+    behavior: "smooth",
+  });
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    isHidden.value = (scrollTop + clientHeight >= scrollHeight - 10);
+  });
 });
 </script>

@@ -17,6 +17,7 @@
     "@pinia/nuxt": "^0.4.6",
     "@supabase/realtime-js": "^2.3.1",
     "daisyui": "^2.51.3",
-    "pinia": "^2.0.29"
+    "pinia": "^2.0.29",
+    "tailwind-scrollbar": "^3.0.0"
   }
 }

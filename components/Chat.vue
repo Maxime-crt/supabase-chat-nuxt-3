@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Menu Top side -->
-    <div class="flex ">
+    <div class="flex">
       <div class="flex gap-3">
         <Private
           v-for="user in filteredUserList"
@@ -29,6 +29,7 @@
               @updateMessages="updateMessages()"
             />
           </div>
+          <!-- Input -->
           <div class="flex justify-center items-center bg-gray-300 p-1 rounded">
             <input
               class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
