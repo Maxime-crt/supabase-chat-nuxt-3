@@ -1,6 +1,9 @@
 <template>
   <div>
-    <button class="bg-gray-100 rounded-lg p-1" @click="handleClick()">
+    <button
+      class="container bg-slate-100 hover:bg-slate-200 p-2"
+      @click="handleClick($event)"
+    >
       <ProfileImage v-model:path="avatar" />
       <div class="flex content-center align-center gap-2">
         <span class="grid font-bold text-sm content-center"> {{ user }} </span>
@@ -8,11 +11,10 @@
         <span class="grid italic text-sm content-center">
           {{ lastMessage }}
         </span>
-        
+
         <span class="grid text-xs content-center">
           {{ dateLastMessage }}
         </span>
-
       </div>
     </button>
   </div>
@@ -31,13 +33,11 @@ const receiver_id = useReceiver_id();
 const lastMessage = ref("");
 const dateLastMessage = ref(null);
 
-// Le receiver_id est celui de l'utilisateur avec qui on veut discuter
-async function handleClick() {
+// Le receiver_id est celui de l'utilisateur avec qui on veut discuter avec prevent default
+const handleClick = (e) => {
+  e.preventDefault();
   receiver_id.value = props.username;
-  /* console.log(user.value);
-  console.log("My id : " + props.personal_id);
-  console.log("Receiver id : " + receiver_id.value); */
-}
+};
 
 // Récupérer le username de chaque utilisateurs
 onMounted(async () => {
@@ -75,13 +75,9 @@ onMounted(async () => {
         }
 
         dateLastMessage.value = new Date(data[0].timestamp).toLocaleString();
-
       });
   } catch (error) {
     console.log(error);
   }
 });
-
-
-
 </script>

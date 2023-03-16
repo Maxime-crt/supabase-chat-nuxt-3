@@ -1,52 +1,80 @@
 <template>
   <div>
-    <!-- Menu Top side -->
-    <div class="flex flex-col gap-4">
-      <div class="">
-        <Private
-          v-for="user in filteredUserList"
-          :key="user.id"
-          :username="user.id"
-          :personal_id="userID"
-        />
-      </div>
-    </div>
     <!-- Chat -->
     <div class="relative mt-4">
-      <div class="bg-red w-full z-50">
+      <div class="">
         <div
           class="flex flex-col flex-grow w-full h-full bg-white overflow-hidden"
         >
-          <div class="mb-2" ref="scrollContainer">
-            <Message
-              v-for="message in messages.slice()"
-              :key="message.id"
-              :username="message.user_id"
-              :receiver_id="message.receiver_id"
-              :personal="message.user_id === userID"
-              :timestamp="message.timestamp"
-              :text="message.text"
-              @updateMessages="updateMessages()"
-            />
-          </div>
-          <!-- Input -->
+          <div v-if="receiver_id">
+            <!-- Bouton retour arrière -->
+            <div
+              class="fixed cursor-pointer left-0 top-0 mt-4 ml-4 w-8 h-8"
+              @click="resetReceiver_id($event)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="ionicon"
+                viewBox="0 0 512 512"
+              >
+                <title>Arrow Back</title>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="48"
+                  d="M244 400L100 256l144-144M120 256h292"
+                />
+              </svg>
+            </div>
 
-          <div
-            v-if="receiver_id"
-            class="flex justify-center items-center bg-gray-300 p-1 rounded"
-          >
-            <input
-              class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
-              type="text"
-              placeholder="Type your message…"
-              v-model="input"
-              @keydown="handleSend"
-            />
+            <div class="mt-6 mb-2" ref="scrollContainer">
+              <Message
+                v-for="message in messages.slice()"
+                :key="message.id"
+                :username="message.user_id"
+                :receiver_id="message.receiver_id"
+                :personal="message.user_id === userID"
+                :timestamp="message.timestamp"
+                :text="message.text"
+                @updateMessages="updateMessages()"
+              />
+            </div>
+            <!-- Input Chat -->
+            <div
+              class="flex justify-center items-center bg-gray-300 p-1 rounded"
+            >
+              <input
+                class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
+                type="text"
+                placeholder="Type your message…"
+                v-model="input"
+                @keydown="handleSend"
+              />
+            </div>
           </div>
           <div v-else>
-            <p class="text-center text-gray-500">
-              Select a conversation to start a chat.
-            </p>
+            <!-- Barre de recherche conversation -->
+            <div class="flex items-center justify-center mb-4 w-full">
+              <input
+                class="container flex items-center h-10 w-full px-3 text-sm outline-none bg-gray-100 p-1 rounded"
+                type="text"
+                placeholder="Rechercher ou démarrer une nouvelle discussion"
+              />
+            </div>
+
+            <!-- Menu Top side -->
+            <div class="flex flex-col gap-4">
+              <div class="">
+                <Private
+                  v-for="user in filteredUserList"
+                  :key="user.id"
+                  :username="user.id"
+                  :personal_id="userID"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -161,5 +189,11 @@ const updateMessages = async () => {
       }, 200);
     });
   });
+};
+
+// Reset le receiver_id à null quand on clique sur le bouton retour arrière avec prevent default pour éviter de recharger la page
+const resetReceiver_id = (event) => {
+  event.preventDefault();
+  receiver_id.value = null;
 };
 </script>
