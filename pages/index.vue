@@ -7,22 +7,18 @@
     </div>
 
     <!-- The button to open modal -->
-    <label for="my-modal-3" class="btn">Messagerie</label>
+    <label for="my-modal-4" class="btn">Messagerie</label>
 
     <!-- Put this part before </body> tag -->
-    <input type="checkbox" id="my-modal-3" class="modal-toggle" />
-    <div class="modal">
-      <div
-        class="modal-box relative scrollbar scrollbar-thumb-rounded-md scrollbar-thumb-gray-300 scrollbar-track-gray-100"
+    <input type="checkbox" id="my-modal-4" class="modal-toggle" />
+    <label for="my-modal-4" class="modal cursor-pointer">
+      <label
+        class="modal-box absolute h-full right-10 scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full"
+        for=""
       >
-        <label
-          for="my-modal-3"
-          class="btn btn-sm btn-circle absolute right-2 top-2"
-          >✕</label
-        >
         <Chat />
-      </div>
-    </div>
+      </label>
+    </label>
 
     <!-- Button Scroll to bottom of the page and appear only when the scrollbar is not on the bottom of the page -->
     <div
@@ -94,7 +90,6 @@ useHead({
   ],
 });
 
-
 // Button Scroll to bottom of the page appear when the user is not on the bottom of the page
 const isHidden = ref(false);
 
@@ -109,7 +104,7 @@ onMounted(() => {
   window.addEventListener("scroll", () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    isHidden.value = (scrollTop + clientHeight >= scrollHeight - 10);
+    isHidden.value = scrollTop + clientHeight >= scrollHeight - 10;
   });
 });
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- Menu Top side -->
-    <div class="flex">
-      <div class="flex gap-3">
+    <div class="flex flex-col gap-4">
+      <div class="">
         <Private
           v-for="user in filteredUserList"
           :key="user.id"
@@ -30,7 +30,11 @@
             />
           </div>
           <!-- Input -->
-          <div class="flex justify-center items-center bg-gray-300 p-1 rounded">
+
+          <div
+            v-if="receiver_id"
+            class="flex justify-center items-center bg-gray-300 p-1 rounded"
+          >
             <input
               class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
               type="text"
@@ -38,6 +42,11 @@
               v-model="input"
               @keydown="handleSend"
             />
+          </div>
+          <div v-else>
+            <p class="text-center text-gray-500">
+              Select a conversation to start a chat.
+            </p>
           </div>
         </div>
       </div>
@@ -153,13 +162,4 @@ const updateMessages = async () => {
     });
   });
 };
-
-// Upload de fichier
-/* const selectedFileName = ref("");
-  
-  async function onFileChange(e) {
-    const file = e.target.files[0];
-    selectedFileName.value = file.name;
-   
-  } */
 </script>
