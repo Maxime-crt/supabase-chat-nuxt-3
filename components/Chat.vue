@@ -156,8 +156,8 @@ watch(receiver_id, async (newReceiver_id) => {
     //function qui Charge les messages
     const loadMessagesBatch = async () => {
       // Charge les messages
-      console.log("Receiver id : " + newReceiver_id);
-      console.log("User id : " + userID.value);
+      /* console.log("Receiver id : " + newReceiver_id);
+      console.log("User id : " + userID.value); */
       const loadedMessages = await chat.getMessagesById(
         newReceiver_id,
         userID.value,

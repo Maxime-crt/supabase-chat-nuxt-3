@@ -1,8 +1,11 @@
 <template>
   <div>
     <button
-      class="container flex items-center bg-slate-100 hover:bg-slate-200 p-2"
+      class="container flex items-center bg-slate-100 p-2"
+      :class="{ 'hover:bg-slate-200': !hovering }"
       @click="handleClick($event)"
+      @mouseover="hovering = true"
+      @mouseleave="hovering = false"
       id="user"
     >
       <div class="flex-shrink-0 mr-2">
