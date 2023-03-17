@@ -64,6 +64,11 @@ onMounted(async () => {
   }
 });
 
+const myLastMessage = ref("");
+const myLastMessageDate = ref(null);
+const hisLastMessage = ref("");
+const hisLastMessageDate = ref(null);
+
 // Récupère le dernier message de la conversation entre l'utilisateur courant et l'utilisateur avec qui on veut discuter
 onMounted(async () => {
   try {
@@ -75,14 +80,29 @@ onMounted(async () => {
       .order("timestamp", { ascending: false })
       .limit(1)
       .then(({ data, error }) => {
-        /* console.log(data); */
-        if (data[0].user_id === props.personal_id) {
-          lastMessage.value = "Vous : " + data[0].text;
-        } else {
-          lastMessage.value = data[0].text;
-        }
+        console.log(data);
+        myLastMessage.value = "Vous : " + data[0].text;
+        myLastMessageDate.value = new Date(data[0].timestamp);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-        dateLastMessage.value = new Date(data[0].timestamp);
+// Récupère le dernier message de la conversation entre l'utilisateur courant et l'utilisateur avec qui on veut discuter
+onMounted(async () => {
+  try {
+    await supabase
+      .from("messages")
+      .select("text, timestamp, user_id, receiver_id")
+      .eq("user_id", props.username)
+      .eq("receiver_id", props.personal_id)
+      .order("timestamp", { ascending: false })
+      .limit(1)
+      .then(({ data, error }) => {
+        console.log(data);
+        hisLastMessage.value = data[0].text;
+        hisLastMessageDate.value = new Date(data[0].timestamp);
       });
   } catch (error) {
     console.log(error);
@@ -91,6 +111,20 @@ onMounted(async () => {
 
 // le format de l'heure
 const messageHour = computed(() => {
+  if (
+    myLastMessageDate.value &&
+    myLastMessageDate.value > hisLastMessageDate.value
+  ) {
+    lastMessage.value = myLastMessage.value;
+    dateLastMessage.value = myLastMessageDate.value;
+  } else if (
+    hisLastMessageDate.value &&
+    hisLastMessageDate.value > myLastMessageDate.value
+  ) {
+    lastMessage.value = hisLastMessage.value;
+    dateLastMessage.value = hisLastMessageDate.value;
+  }
+
   const now = new Date();
   const timestampDate = new Date(dateLastMessage.value);
   const isToday = now.toDateString() === timestampDate.toDateString();
