@@ -30,7 +30,7 @@
             </div>
 
             <div
-              class="overflow-y-auto scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full w-full"
+              class="p-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full w-full"
               style="max-height: calc(100vh - 190px)"
               ref="scrollContainer"
             >
