@@ -111,6 +111,10 @@ const messageHour = computed(() => {
       minute: "2-digit",
       hour12: false,
     })}`;
+  }
+  // S'il n'y a pas de messages
+  else if (lastMessage.value === "") {
+    return "";
   } else {
     // plus de 2 jours
     const options = {
