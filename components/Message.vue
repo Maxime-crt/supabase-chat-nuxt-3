@@ -1,6 +1,6 @@
 <template>
   <!-- Other -->
-  <div v-if="!personal" class="flex w-full mt-2 space-x-3 max-w-xs">
+  <div v-if="!personal" class="flex w-full my-3 space-x-3 max-w-xs">
     <!-- Profile Picture -->
     <div class="flex-shrink-0 w-12 h-12 overflow-hidden">
       <ProfileImage v-model:path="avatar" />
@@ -18,7 +18,7 @@
     </div>
   </div>
   <!-- Current -->
-  <div v-else class="flex w-full mt-4 space-x-3 max-w-xs ml-auto justify-end">
+  <div v-else class="flex w-full my-3 space-x-3 max-w-xs ml-auto justify-end">
     <div>
       <div
         class="bg-emerald-600 text-white p-3 rounded-l-lg rounded-br-lg sm:max-w-sm"
@@ -26,9 +26,9 @@
       >
         <p class="text-sm break-words">{{ text }}</p>
       </div>
-      <span class="flex text-xs text-gray-500 leading-none justify-end mt-2">{{
-        messageHour
-      }}</span>
+      <span class="flex text-xs text-gray-500 leading-none justify-end mt-2">
+        {{ messageHour }}
+      </span>
     </div>
     <!-- Profile Picture -->
     <div class="flex-shrink-0 w-12 h-12 overflow-hidden">

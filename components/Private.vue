@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="flex-shrink-0 w-20 text-xs text-gray-500">
-        {{ dateLastMessage }}
+        {{ messageHour }}
       </div>
     </button>
   </div>
@@ -72,17 +72,58 @@ onMounted(async () => {
       .order("timestamp", { ascending: false })
       .limit(1)
       .then(({ data, error }) => {
-        console.log(data);
+        /* console.log(data); */
         if (data[0].user_id === props.personal_id) {
           lastMessage.value = "Vous : " + data[0].text;
         } else {
           lastMessage.value = data[0].text;
         }
 
-        dateLastMessage.value = new Date(data[0].timestamp).toLocaleString();
+        dateLastMessage.value = new Date(data[0].timestamp);
       });
   } catch (error) {
     console.log(error);
+  }
+});
+
+// le format de l'heure
+const messageHour = computed(() => {
+  const now = new Date();
+  const timestampDate = new Date(dateLastMessage.value);
+  const isToday = now.toDateString() === timestampDate.toDateString();
+  const isYesterday =
+    new Date(now - 86400000).toDateString() === timestampDate.toDateString(); // 86400000 = 24 * 60 * 60 * 1000 (milliseconds in a day)
+
+  if (isToday) {
+    // aujourd'hui
+    return `Aujourd'hui à ${timestampDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })}`;
+  } else if (isYesterday) {
+    // hier
+    return `Hier à ${timestampDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })}`;
+  } else {
+    // plus de 2 jours
+    const options = {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour12: false,
+    };
+    return `${timestampDate.toLocaleDateString(
+      [],
+      options
+    )} à ${timestampDate.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    })}`;
   }
 });
 </script>
