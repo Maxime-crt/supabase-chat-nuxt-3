@@ -6,9 +6,7 @@
       <Auth v-else />
     </div>
 
-    
 
-    
 
     <!-- The button to open modal -->
     <label for="my-modal-4" class="btn">Messagerie</label>
@@ -17,8 +15,8 @@
     <input type="checkbox" id="my-modal-4" class="modal-toggle" />
     <label for="my-modal-4" class="modal cursor-pointer">
       <label
-        class="modal-box absolute h-full right-2 sm:right-10 scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full"
-        for=""
+        class="modal-box absolute h-full sm:right-10 scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full"
+       
       >
         <Chat />
       </label>

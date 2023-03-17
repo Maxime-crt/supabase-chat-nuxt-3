@@ -29,7 +29,11 @@
               </svg>
             </div>
 
-            <div class="mt-6 mb-2" ref="scrollContainer">
+            <div
+              class="overflow-y-auto scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full w-full"
+              style="max-height: calc(100vh - 190px)"
+              ref="scrollContainer"
+            >
               <Message
                 v-for="message in messages.slice()"
                 :key="message.id"
@@ -41,10 +45,9 @@
                 @updateMessages="updateMessages()"
               />
             </div>
+
             <!-- Input Chat -->
-            <div
-              class="flex justify-center items-center bg-gray-300 p-1 rounded"
-            >
+            <div class="fixed bottom-0 left-0 w-full bg-gray-300 p-2 rounded">
               <input
                 class="flex items-center h-10 w-full rounded px-3 text-sm outline-none"
                 type="text"
@@ -55,15 +58,6 @@
             </div>
           </div>
           <div v-else>
-            <!-- Barre de recherche conversation -->
-            <div class="flex items-center justify-center mb-4 w-full">
-              <input
-                class="container flex items-center h-10 w-full px-3 text-sm outline-none bg-gray-100 p-1 rounded"
-                type="text"
-                placeholder="Rechercher ou démarrer une nouvelle discussion"
-              />
-            </div>
-
             <!-- Menu Top side -->
             <div class="flex flex-col gap-4">
               <div class="">
