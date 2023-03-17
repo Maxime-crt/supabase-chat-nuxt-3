@@ -3,6 +3,7 @@
     <button
       class="container flex items-center bg-slate-100 hover:bg-slate-200 p-2"
       @click="handleClick($event)"
+      id="user"
     >
       <div class="flex-shrink-0 mr-2">
         <ProfileImage v-model:path="avatar" />

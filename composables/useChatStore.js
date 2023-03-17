@@ -31,7 +31,7 @@ export const useChatStore = defineStore("chatStore", {
 
     // A function that get the new message only if we are in the chat with the user who sent it
     async onNewMessageById(messages, id, userID, handler) {
-        /* console.log("messages : " + messages.value ); */
+      /* console.log("messages : " + messages.value ); */
       /* console.log("test1 : " + userID);
       console.log("test2 : " + id);
       console.log("test3 : " + handler); */
@@ -39,7 +39,6 @@ export const useChatStore = defineStore("chatStore", {
       supabase
         .channel("realtime:messages:*")
         .on("postgres_changes", { event: "*", schema: "*" }, (payload) => {
-        
           if (
             (payload.new.receiver_id == id && payload.new.user_id == userID) ||
             (payload.new.receiver_id == userID && payload.new.user_id == id)
@@ -61,6 +60,11 @@ export const useChatStore = defineStore("chatStore", {
     async getUserList() {
       let supabase = useSupabaseClient();
       const { data } = await supabase.from("profiles").select();
+      return data;
+    },
+    async getUserById(id) {
+      let supabase = useSupabaseClient();
+      const { data } = await supabase.from("profiles").select().eq("id", id).single();
       return data;
     },
   },

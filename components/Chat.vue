@@ -7,30 +7,46 @@
           class="flex flex-col flex-grow w-full h-full bg-white overflow-hidden"
         >
           <div v-if="receiver_id">
-            <!-- Bouton retour arrière -->
-            <div
-              class="fixed cursor-pointer left-0 top-0 mt-4 ml-4 w-8 h-8"
-              @click="resetReceiver_id($event)"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ionicon"
-                viewBox="0 0 512 512"
-              >
-                <title>Arrow Back</title>
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="48"
-                  d="M244 400L100 256l144-144M120 256h292"
-                />
-              </svg>
+            <div class="fixed top-0 left-0 right-0 z-50 bg-amber-300 shadow-lg">
+              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center sm:h-14 h-12">
+                  <div class="flex items-center">
+                    <!-- Menu Top side -->
+                    <div
+                      class="cursor-pointer mr-4"
+                      @click="resetReceiver_id($event)"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="ionicon h-8 w-8 text-white"
+                        viewBox="0 0 512 512"
+                      >
+                        <title>Back</title>
+                        <path
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="48"
+                          d="M244 400L100 256l144-144M120 256h292"
+                        />
+                      </svg>
+                    </div>
+                    <!-- Avatar -->
+                    <div class="hidden sm:block sm:mr-2">
+                      <ProfileImage v-model:path="ReceiverInfos.avatar_url" />
+                    </div>
+                    <!-- Username -->
+                    <div class="sm:block text-white font-bold text-lg">
+                      {{ ReceiverInfos.username }}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div
-              class="p-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full w-full"
+              class="mt-4 p-1 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full w-full"
               style="max-height: calc(100vh - 190px)"
               ref="scrollContainer"
             >
@@ -59,7 +75,7 @@
           </div>
           <div v-else>
             <!-- Menu Top side -->
-            <div class="flex flex-col gap-4">
+            <div class="">
               <div class="">
                 <Private
                   v-for="user in filteredUserList"
@@ -77,16 +93,26 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  receiver_id: {
+    type: String,
+    required: false,
+  },
+});
+
 const user = useUser();
 const chat = useChatStore();
 const input = ref("");
 const userID = ref(null);
 const userList = ref([]);
-const receiver_id = useReceiver_id();
+const receiver_id = props.receiver_id
+  ? ref(props.receiver_id)
+  : useReceiver_id();
 const messages = ref([]);
 const messagesCount = ref(0);
 const maxMessagesPerRequest = 50;
 const scrollContainer = ref(null);
+const ReceiverInfos = ref(null);
 
 const getUsers = async () => {
   userList.value = await chat.getUserList();
@@ -119,6 +145,9 @@ const handleSend = async (event) => {
 // Au changement de la conversation on charge les messages et on écoute les nouveaux messages
 watch(receiver_id, async (newReceiver_id) => {
   if (newReceiver_id) {
+    // getUserById
+    ReceiverInfos.value = await chat.getUserById(newReceiver_id);
+
     // Reset les messages et le compteur de messages chargés pour la nouvelle conversation
     messages.value = [];
 
