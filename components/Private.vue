@@ -1,20 +1,24 @@
 <template>
   <div>
     <button
-      class="container bg-slate-100 hover:bg-slate-200 p-2"
+      class="container flex items-center bg-slate-100 hover:bg-slate-200 p-2"
       @click="handleClick($event)"
     >
-      <ProfileImage v-model:path="avatar" />
-      <div class="flex content-center align-center gap-2">
-        <span class="grid font-bold text-sm content-center"> {{ user }} </span>
-
-        <span class="grid italic text-sm content-center">
-          {{ lastMessage }}
-        </span>
-
-        <span class="grid text-xs content-center">
-          {{ dateLastMessage }}
-        </span>
+      <div class="flex-shrink-0 mr-2">
+        <ProfileImage v-model:path="avatar" />
+      </div>
+      <div class="flex-grow w-80">
+        <div class="font-bold text-sm text-left">{{ user }}</div>
+        <div class="text-sm text-left overflow-hidden">
+          <span :class="{ 'text-stroke': lastMessage.length > 20 }">{{
+            lastMessage.length > 20
+              ? lastMessage.slice(0, 20) + "..."
+              : lastMessage
+          }}</span>
+        </div>
+      </div>
+      <div class="flex-shrink-0 w-20 text-xs text-gray-500">
+        {{ dateLastMessage }}
       </div>
     </button>
   </div>
