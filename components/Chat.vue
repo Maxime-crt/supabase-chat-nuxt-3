@@ -76,14 +76,15 @@
           <div v-else>
             <!-- Menu Top side -->
             <div class="">
-              <div class="">
-                <Private
-                  v-for="user in filteredUserList"
-                  :key="user.id"
-                  :username="user.id"
-                  :personal_id="userID"
-                />
-              </div>
+              <h2 class="text-2xl font-bold text-gray-800">
+                User List of Supabase DB :
+              </h2>
+              <Private
+                v-for="user in filteredUserList"
+                :key="user.id"
+                :username="user.id"
+                :personal_id="userID"
+              />
             </div>
           </div>
         </div>
