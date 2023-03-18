@@ -25,6 +25,16 @@ Start the development server on http://localhost:3000
 npm run dev
 ```
 
+## Error 
+
+If you are facing this error : 500 Cannot read properties of null (reading 'id').
+
+Comment the component Chat like this : <!-- <Chat :receiver_id="null" /> --> 
+
+And then refresh tha web page or reload project. If you don't have the error anymore you can uncomment Chat like this : <Chat :receiver_id="null" />
+
+It should work now !
+
 ## Production
 
 Build the application for production:
