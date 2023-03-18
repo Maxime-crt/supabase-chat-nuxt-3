@@ -29,9 +29,9 @@ npm run dev
 
 If you are facing this error : 500 Cannot read properties of null (reading 'id').
 
-Comment the component Chat like this : <!-- <Chat :receiver_id="null" /> --> 
+Comment the component Chat like this : ```<!-- <Chat :receiver_id="null" /> --> ```
 
-And then refresh tha web page or reload project. If you don't have the error anymore you can uncomment Chat like this : <Chat :receiver_id="null" />
+And then refresh tha web page or reload project. If you don't have the error anymore you can uncomment Chat like this : ```<Chat :receiver_id="null" />```
 
 It should work now !
 
