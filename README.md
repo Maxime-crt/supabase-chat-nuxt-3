@@ -33,7 +33,7 @@ Comment the component Chat like this : ```<!-- <Chat :receiver_id="null" /> --> 
 
 And then refresh tha web page or reload project. If you don't have the error anymore you can uncomment Chat like this : ```<Chat :receiver_id="null" />```
 
-It should work now !
+Now you can connect and try the Chat
 
 ## Production
 
