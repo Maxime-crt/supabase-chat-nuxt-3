@@ -20,7 +20,7 @@
           class="modal-box absolute h-full right sm:right-10 scrollbar scrollbar-thumb-rounded-full scrollbar-thumb-gray-300 scrollbar-track-gray-100 scrollbar-corner-rounded-full"
         >
           <Suspense>
-            <Chat :receiver_id="null" />
+            <LazyChat :receiver_id="null" />
           </Suspense>
         </label>
       </label>
